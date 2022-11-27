@@ -1,5 +1,5 @@
 ---
-name: CI/CD React JS GitHub Pages
+name: React JS GitHub Pages
 on:
   push:
     branches: [ dev ]
