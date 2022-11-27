@@ -10,6 +10,7 @@ function App() {
           Modifier <code>src/pages/App.js</code> et sauvegarder pour actualiser
           la page.
         </p>
+        <p>Romain DIASPARRA</p>
         <a
           className="App-link"
           href="https://reactjs.org"
