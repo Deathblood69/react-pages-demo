@@ -1,49 +1,35 @@
----
-name: React JS GitHub Pages
-on:
-  push:
-    branches: [ dev ]
-env:
-  NODE_VERSION: 18.x
-  GIT_USERNAME: "Deathblood69"
-  GIT_EMAIL: "deathblood69002@gmail.com"
+name: website
+
+on: push
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Gen dummy page
+        run: |
+          mkdir public
+          cat > public/index.html <<EOL
+          <!doctype html>
+          <html>
+            <head>
+              <title>GitHub Pages deployed!</title>
+            </head>
+            <body>
+              <p>GitHub Pages with <strong>${{ github.sha }}</strong> commit ID has been deployed through <a href="https://github.com/marketplace/actions/github-pages">GitHub Pages action</a> successfully.</p>
+            </body>
+          </html>
+          EOL
+      -
+        name: Deploy to GitHub Pages
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v3
         with:
-          node-version: 18.x
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: 'npm'
-      - run: npm install
-      - run: npm test
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: 'npm'
-      - run: npm install
-      - name: Deploy
-      - uses: crazy-max/ghaction-github-pages@v3
-        with:
-            target_branch: gh-pages
-            build_dir: public
+          target_branch: gh-pages
+          build_dir: public
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
