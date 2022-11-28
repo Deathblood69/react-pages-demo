@@ -8,7 +8,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Modifier <code>src/pages/App.js</code> et sauvegarder pour actualiser
-          la page.
+          la page. Paul
         </p>
         <a
           className="App-link"
